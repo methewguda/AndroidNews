@@ -10,6 +10,10 @@ app.controller('AndroidNewsCtrl', function($http, $scope){
       .success(function(response){
         var stories = [];
         angular.forEach(response.data.children, function(child){
+          var story = child.data;
+          if(!story.thumbnail || story.thumbnail === 'self'){
+              story.thumbnail = 'http://redditstatic.com/icon.png';
+          }
           stories.push(child.data);
         });
       callback(stories);
@@ -35,6 +39,10 @@ app.controller('AndroidNewsCtrl', function($http, $scope){
       $scope.$broadcast('scroll.refreshComplete');
     });
   };
+
+  $scope.openLink = function(url){
+    window.open(url, '_blank');
+  };
 });
 
 app.run(function($ionicPlatform) {
@@ -42,6 +50,9 @@ app.run(function($ionicPlatform) {
     if(window.cordova && window.cordova.plugins.Keyboard) {
       cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
       cordova.plugins.Keyboard.disableScroll(true);
+    }
+    if(window.cordova && window.cordova.InAppBrowser){
+      window.open = cordova.InAppBrowser.open;
     }
     if(window.StatusBar) {
       StatusBar.styleDefault();

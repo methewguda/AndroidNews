@@ -26,11 +26,10 @@
           on-refresh="loadNewStories()">
         </ion-refresher>
         <div class="list">
-          <a href="{{story.url}}" target="_blank" 
-           class="item item-thumbnail-left " 
+          <a class="item item-thumbnail-left " 
+           ng-click="openLink(story.url)"
            ng-repeat="story in stories track by story.id">
-            <img ng-src="{{story.thumbnail}}" 
-                 ng-if="story.thumbnail.startWith('http')">
+            <img ng-src="{{story.thumbnail}}">
             <h2 class="story-title">{{story.title}}</h2>
             <span am-time-ago="story.created_utc" am-preprocess="unix"></span>
             <p>{{story.domain}}</p> 
