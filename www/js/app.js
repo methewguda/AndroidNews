@@ -11,8 +11,8 @@ app.controller('AndroidNewsCtrl', function($http, $scope){
         var stories = [];
         angular.forEach(response.data.children, function(child){
           var story = child.data;
-          if(!story.thumbnail || story.thumbnail === 'self'){
-              story.thumbnail = 'http://redditstatic.com/icon.png';
+          if(!story.thumbnail || story.thumbnail === 'self' || story.thumbnail === 'default'){
+              story.thumbnail = 'https://camo.githubusercontent.com/b13830f5a9baecd3d83ef5cae4d5107d25cdbfbe/68747470733a2f2f662e636c6f75642e6769746875622e636f6d2f6173736574732f3732313033382f313732383830352f35336532613364382d363262352d313165332d383964312d3934376632373062646430332e706e67';
           }
           stories.push(child.data);
         });
