@@ -18,12 +18,17 @@
 
     <ion-pane>
       <ion-header-bar class="bar-positive">
-        <h1 class="title">Android New</h1>
+        <h1 class="title">Android News</h1>
       </ion-header-bar>
       <ion-content>
+        <ion-refresher
+          pulling-text="Pull to Refresh"
+          on-refresh="loadNewStories()">
+        </ion-refresher>
         <div class="list">
           <a href="{{story.url}}" target="_blank" 
-           class="item item-thumbnail-left " ng-repeat="story in stories">
+           class="item item-thumbnail-left " 
+           ng-repeat="story in stories track by story.id">
             <img ng-src="{{story.thumbnail}}" 
                  ng-if="story.thumbnail.startWith('http')">
             <h2 class="story-title">{{story.title}}</h2>
@@ -31,6 +36,10 @@
             <p>{{story.domain}}</p> 
           </a>
         </div>
+        <ion-infinite-scroll
+          on-infinite="loadOlderStories()"
+          distance="1%">
+        </ion-infinite-scroll>
       </ion-content>
     </ion-pane>
   </body>
