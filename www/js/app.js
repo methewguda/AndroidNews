@@ -1,11 +1,18 @@
-// Ionic Starter App
+(function(){
+var app = angular.module('androidnews', ['ionic']);
 
-// angular.module is a global place for creating, registering and retrieving Angular modules
-// 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
-// the 2nd parameter is an array of 'requires'
-angular.module('starter', ['ionic'])
+app.controller('AndroidNewsCtrl', function($http, $scope){
+  
+  $scope.stories = [];
+  $http.get('https://www.reddit.com/r/Android/new/.json')
+    .success(function(response){
+      angular.forEach(response.data.children, function(child){
+       $scope.stories.push(child.data);
+      });
+    });
+});
 
-.run(function($ionicPlatform) {
+app.run(function($ionicPlatform) {
   $ionicPlatform.ready(function() {
     if(window.cordova && window.cordova.plugins.Keyboard) {
       // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
@@ -21,4 +28,5 @@ angular.module('starter', ['ionic'])
       StatusBar.styleDefault();
     }
   });
-})
+});
+}());
